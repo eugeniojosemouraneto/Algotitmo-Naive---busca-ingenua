@@ -5,7 +5,8 @@
 using namespace std;
 
 class NaiveAlgorithm {
-    int standardSize;
+    int standardSize,
+        numberCharactersAnalyzedText;
     string text, standard;
     vector <pair<int, int>> positionsAppearancesPattern;
 
@@ -23,6 +24,7 @@ class NaiveAlgorithm {
             this -> standard = standard;
 
             this -> standardSize = textSize(standard);
+            this -> numberCharactersAnalyzedText = textSize(text);
         }
 
         void  clearPatternPositions() {
@@ -41,23 +43,14 @@ class NaiveAlgorithm {
             return this -> positionsAppearancesPattern.size();
         }
 
-        vector <pair<int,int>> NaiveMethod() {
+        pair<int, vector <pair<int,int>>> NaiveMethod(int numberCharactersAnalyzedSeen) {
             for(int i = 0; this -> text[i] != '\0'; i++) {
                 if(this -> text[i] == standard[0]) {
                     int j = 0;
                     while(this -> standard[j] != '\0' and this -> text[i+j] == this -> standard[j]) {j++;}
-                    if(this -> text[i+j-1] == this -> standard[this -> standardSize -1]) {this -> positionsAppearancesPattern.push_back({i, i+j-1});}
+                    if(this -> text[i+j-1] == this -> standard[this -> standardSize -1]) {this -> positionsAppearancesPattern.push_back({numberCharactersAnalyzedSeen+i, numberCharactersAnalyzedSeen+i+j-1});}
                 }
             }
-            return this -> positionsAppearancesPattern;
-        }
-     
-        pair<vector<pair<int, int>>, int> runAlgorithm() {
-            this -> clearPatternPositions();
-
-            return {
-                this -> NaiveMethod(),
-                this -> GetNumberPatternPositions() 
-            };
+            return {this -> numberCharactersAnalyzedText, this -> positionsAppearancesPattern};
         }
 };

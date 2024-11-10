@@ -39,15 +39,15 @@ class FlowInput {
 
         bool isBlocksToBeRead() {return (this -> file.peek() != EOF);}
 
-        string ReadingBlock(int blockToBeRead = -1) {
+        pair<int, string> ReadingBlock(int blockToBeRead = -1) {
             if(blockToBeRead < 1) blockToBeRead = this -> blockNumberAnalyzed;
             
             if(!file.is_open() or !isBlocksToBeRead()) 
-                return "";
+                return {0, ""};
 
             clearReadVariable();
             contentBlock.reserve(this->numberMaxCharacteresPerRead);
             getline(this->file, this->contentBlock);
-            return this->contentBlock;
+            return {this->contentBlock.size(), this->contentBlock};
         }
 };

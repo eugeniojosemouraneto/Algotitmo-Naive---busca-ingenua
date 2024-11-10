@@ -6,17 +6,18 @@
 using namespace std;
 
 void run() {
-    string analyzedText = "",
-           analyzedStandard = "Atenas";
+    int numberCharactersAnalyzedSeen = 0;
+    string analyzedStandard = "Atenas";
     vector <pair <int, int>> positions;
 
     FlowInput stream("fileTextTest.txt");
     
     while(stream.isBlocksToBeRead()) {
-        analyzedText = stream.ReadingBlock();
-        NaiveAlgorithm naive(analyzedText, analyzedStandard);
-        vector <pair <int, int>> aux = naive.NaiveMethod();
-        positions.insert(positions.end(), aux.begin(), aux.end());
+        pair <int, string> analyzedText = stream.ReadingBlock();
+        numberCharactersAnalyzedSeen += analyzedText.first;
+        NaiveAlgorithm naive(analyzedText.second, analyzedStandard);
+        pair <int, vector <pair <int, int>>> aux = naive.NaiveMethod(numberCharactersAnalyzedSeen);
+        positions.insert(positions.end(), aux.second.begin(), aux.second.end());
     }
     
     int numberPatternsFound = positions.size();
