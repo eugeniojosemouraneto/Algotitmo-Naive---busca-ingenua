@@ -1,0 +1,28 @@
+DELTA7547 Amsterdam 00:44 CidadeDoMexico 03:25
+AFRANCE1711 Amsterdam 10:00 Paris 16:18
+AZUL1130 Amsterdam 09:40 Osaka 21:27
+KLM2382 Amsterdam 19:00 Moscou 22:51
+ALITALIA8409 Amsterdam 16:33 Porto 18:17
+AIRBUS9150 Amsterdam 12:02 Paris 13:54
+AIRBUS1754 Amsterdam 16:24 Honolulu 22:27
+TAM1058 Amsterdam 04:22 Dublin 14:13
+TAM5502 Amsterdam 13:57 Honolulu 16:14
+AIRBUS7530 Amsterdam 07:19 Xangai 10:38 11:30 Hamburg 12:40
+ASKY3265 Amsterdam 12:54 BuenosAires 17:12
+ALITALIA3534 Amsterdam 03:37 Lisboa 04:54
+AZUL8395 Amsterdam 00:54 Lima 09:30
+AIRBUS9822 Amsterdam 02:37 Manaus 20:41
+ASKY2314 Amsterdam 12:46 Napoli 18:40
+TAM7319 Amsterdam 04:40 CidadeDoMexico 07:49 08:19 SaoPaulo 10:58
+KLM8819 Amsterdam 20:52 Seul 21:12
+ASKY1869 Amsterdam 01:20 RioDeJaneiro 16:43
+AIRBUS7633 Amsterdam 14:21 Orlando 14:48
+VARIG1963 Amsterdam 09:13 Atenas 14:44
+DELTA5021 Amsterdam 18:03 Atenas 18:36
+KLM1810 Amsterdam 01:42 Lima 18:35
+AIRBUS4830 Amsterdam 00:09 Roma 22:09
+AIRBUS7772 Atenas 08:34 Florenca 19:37
+TAM5834 Atenas 00:50 Lima 06:24
+KLM4650 Atenas 00:14 Barcelona 01:08 01:38 Paris 02:05
+ALITALIA2762 Atenas 06:25 NovaYork 13:48
+AFRANCE6146 Atenas 18:30 Vancouver 18:49
