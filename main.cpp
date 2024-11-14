@@ -10,7 +10,7 @@ void run() {
     string analyzedStandard = "Atenas";
     vector <pair <int, int>> positions;
 
-    FlowInput stream("fileTextTest.txt");
+    FlowInput stream("fileText.txt");
     
     while(stream.isBlocksToBeRead()) {
         pair <int, string> analyzedText = stream.ReadingBlock();
