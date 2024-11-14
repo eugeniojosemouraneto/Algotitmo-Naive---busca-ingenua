@@ -1,28 +1,94 @@
-DELTA7547 Amsterdam 00:44 CidadeDoMexico 03:25
-AFRANCE1711 Amsterdam 10:00 Paris 16:18
-AZUL1130 Amsterdam 09:40 Osaka 21:27
-KLM2382 Amsterdam 19:00 Moscou 22:51
-ALITALIA8409 Amsterdam 16:33 Porto 18:17
-AIRBUS9150 Amsterdam 12:02 Paris 13:54
-AIRBUS1754 Amsterdam 16:24 Honolulu 22:27
-TAM1058 Amsterdam 04:22 Dublin 14:13
-TAM5502 Amsterdam 13:57 Honolulu 16:14
-AIRBUS7530 Amsterdam 07:19 Xangai 10:38 11:30 Hamburg 12:40
-ASKY3265 Amsterdam 12:54 BuenosAires 17:12
-ALITALIA3534 Amsterdam 03:37 Lisboa 04:54
-AZUL8395 Amsterdam 00:54 Lima 09:30
-AIRBUS9822 Amsterdam 02:37 Manaus 20:41
-ASKY2314 Amsterdam 12:46 Napoli 18:40
-TAM7319 Amsterdam 04:40 CidadeDoMexico 07:49 08:19 SaoPaulo 10:58
-KLM8819 Amsterdam 20:52 Seul 21:12
-ASKY1869 Amsterdam 01:20 RioDeJaneiro 16:43
-AIRBUS7633 Amsterdam 14:21 Orlando 14:48
-VARIG1963 Amsterdam 09:13 Atenas 14:44
-DELTA5021 Amsterdam 18:03 Atenas 18:36
-KLM1810 Amsterdam 01:42 Lima 18:35
-AIRBUS4830 Amsterdam 00:09 Roma 22:09
-AIRBUS7772 Atenas 08:34 Florenca 19:37
-TAM5834 Atenas 00:50 Lima 06:24
-KLM4650 Atenas 00:14 Barcelona 01:08 01:38 Paris 02:05
-ALITALIA2762 Atenas 06:25 NovaYork 13:48
-AFRANCE6146 Atenas 18:30 Vancouver 18:49
+    As implementações vistas anteriormente no gerenciamento de memória se mostraram muitas vezes ineficientes. Além disso, o tamanho de um programa e de suas estruturas de dados 
+estava limitado ao tamanho da memória disponível. A utilização da técnica de overlay para contornar este problema é de difícil implementação na prática e nem sempre uma solução
+garantida. Memória Virtual é uma técnica sofisticada e poderosa de gerência de memória, onde as memórias principal e secundária são combinadas, dando ao usuário a ilusão de 
+existir uma memória muito maior que a capacidade real da memória principal. O conceito de memória virtual fundamenta-se em não vincular o endereçamento feito pelo programa 
+dos endereços físicos da memória principal. Desta forma, programas e suas estruturas de dados deixam de estar limitados ao tamanho da memória física disponível, pois podem 
+possuir endereços associados à memória secundária. Outra vantagem da técnica de memória virtual é permitir um número maior de processos compartilhando a memória principal, 
+já que apenas partes de cada processo estarão residentes. Isto leva a uma utilização mais eficiente também do processador. Além disso, essa técnica possibilita minimizar o 
+problema da fragmentação da memória principal. 
+   
+7.2 ESPAÇO DE ENDEREÇAMENTO VIRTUAL 
+O conceito de memória virtual se aproxima muito da idéia de um vetor existente nas linguagens de alto nível. Quando um programa faz referência a um elemento do vetor, não há 
+preocupação em saber a posição de memória daquele dado. O compilador se encarrega de gerar instruções que implementem esse mecanismo, tornando-o totalmente transparente ao 
+programador. A memória virtual utiliza abstração semelhante, só que em relação aos endereços dos programas e dados. Um programa no ambiente de memória virtual não faz referência
+a endereços físicos de memória (endereços reais), mas apenas a endereços virtuais. No momento da execução de uma instrução, o endereço virtual referenciado é traduzido para um 
+endereço físico, pois o processador manipula apenas posições da memória principal. O mecanismo de tradução do endereço virtual para o endereço físico é chamado de mapeamento. 
+Como o espaço de endereçamento virtual não tem nenhuma relação direta com os endereços no espaço real, um programa pode fazer referência a endereços virtuais que estejam fora 
+dos limites da memória principal, ou seja, os programas e suas estruturas de dados não estão mais limitados ao tamanho da memória física disponível. Para que isso seja possível, 
+o Sistema Operacional utiliza a memória secundária como extensão da memória principal. Quando um programa é executado, somente uma parte do seu código fica residente na memória 
+principal, permanecendo o restante na memória secundária até o momento de ser referenciado. Esta condição permite aumentar o compartilhamento da memória principal entre muitos 
+processos. No desenvolvimento de aplicações, a existência dos endereços virtuais é ignorada pelo programador. Os compiladores e linkers se encarregam de gerar o código 
+executável em função do espaço de endereçamento virtual, e o Sistema Operacional cuida dos detalhes durante sua execução. 
+
+7.3 MAPEAMENTO 
+O processador apenas executa instruções e referencia dados residentes no espaço de endereçamento real; portanto, deve existir um mecanismo que transforme os endereços virtuais
+em reais. Esse mecanismo é chamado mapeamento. Nos sistemas atuais, o mapeamento é realizado por hardware juntamente com o Sistema Operacional. O dispositivo de hardware 
+responsável por esta tradução é conhecido como Unidade de Gerenciamento de Memória (Memory Management Unit – MMU), sendo acionado sempre que se faz referência um endereço 
+virtual. Depois de traduzido, o endereço real pode ser utilizado pelo processador para acesso à memória principal. Cada processo tem o seu espaço de endereçamento virtual como 
+se possuísse sua própria memória. O mecanismo de tradução se encarrega, então, de manter tabelas de mapeamento exclusivas para cada processo, relacionando os endereços virtuais 
+do processo às suas posições na memória real. Caso o mapeamento fosse realizado para cada célula na memória principal, o espaço ocupado pelas tabelas seria tão grande quanto o 
+espaço de endereçamento virtual de cada processo, o que inviabilizaria a implementação do mecanismo de memória virtual. Em função disso, as tabelas mapeiam blocos de dados, 
+cujo tamanho determina o número de entradas existentes nas tabelas de mapeamento. Quanto maior o bloco, menos entradas nas tabelas de mapeamento e, conseqüentemente, tabelas 
+de mapeamento que ocupam um menor espaço na memória. Espaço de Endereçamento Virtual Tamanho do Bloco Número de Blocos Número de entradas na tabela de mapeamento 232 endereços 
+512 bytes 223 223232 endereços 4 KB 220 220264 endereços 4 KB 252 252264 endereços 64 KB 248 248
+Como veremos a seguir, existem Sistemas Operacionais que trabalham apenas com blocos de tamanho fixo (paginação), enquanto outros utilizam blocos de tamanho variável 
+(segmentação). Existe ainda um terceiro tipo de sistema que implementa ambas as técnicas (segmentação paginada). 
+
+7.4 PAGINAÇÃO 
+É a técnica de gerência de memória onde o espaço de endereçamento virtual e o real são divididos em blocos do mesmo tamanho chamados páginas. A definição do tamanho da página 
+é um fator importante no projeto de sistemas que implementam memória virtual por paginação. O tamanho da página está associado à arquitetura do hardware e varia de acordo com o 
+processador, mas normalmente está entre 512 e 16MB. Páginas no espaço virtual são denominadas páginas virtuais, enquanto as páginas no espaço real são chamadas de páginas reais, 
+molduras ou frames.Todo o mapeamento de endereço virtual em real é realizado através de tabelas de páginas. Cada processo possui sua própria tabela e cada página virtual do 
+processo possui uma entrada na tabela de páginas(ETP), com informações de mapeamento que permitem ao sistema localizar a página real correspondente. Nessa técnica, o endereço 
+virtual é formado pelo número da página virtual (NPV) e por um deslocamento. O NPV identifica unicamente a página virtual que contém o endereço, funcionando como um índice na 
+tabela de paginas. O deslocamento indica a posição do endereço virtual em relação ao início da página na qual se encontra. O endereço físico é obtido, então, combinando-se o 
+endereço do frame, localizado na tabela de páginas, com o deslocamento, contido no endereço virtual. Além da informação sobre a localização da página virtual, a ETP possui 
+outras informações, como o bit de validade (valid bit) que indica se uma página está ou não na memória principal. Sempre que o processo referencia um endereço virtual, a 
+unidade de gerência de memória verifica, através do bit de validade, se a página que contém o endereço referenciado está ou não na memória principal. Caso a página não esteja
+na memória, dizemos que ocorre uma falta de página(page fault). Neste caso, o sistema transfere a página da memória secundária para a memória principal, realizando uma operação 
+de E/S conhecida como page in ou paginação. O número de faltas de página gerado por um processo depende de como o programa foi desenvolvido, além da política de gerência de 
+memória implementada pelo Sistema Operacional. O número de falta de páginas geradas por cada processo em um determinado intervalo de tempo é definido como taxa de paginação. 
+
+7.4.1 PAGINAÇÃO MULTINÍVEL 
+Em sistemas que implementam apenas um nível de paginação, o tamanho das tabelas de páginas pode ser um problema. Em uma arquitetura de 32 bits para endereçamento e páginas com 
+4KB por processo, onde cada entrada na tabela de páginas ocupe 4 bytes, a tabela de páginas poderia ter mais de um milhão de entradas e ocuparia 4 MB de espaço. Imaginando 
+vários processos residentes na memória principal, manter tabelas desse tamanho para cada processo certamente seria de difícil gerenciamento. Uma boa solução para contornar o 
+problema é a utilização de tabelas de páginas multinível. Com a finalidade de propiciar um melhor entendimento do mencionado conceito, considere-se um sistema computacional com 
+palavra de 32 bits, 4 GB de espaço de endereçamento virtual e páginas de tamanho 4K. Nesta configuração, a palavra que chega à MMU é dividida em três partes, como indica a 
+Figura: Dessa forma, cada entrada do primeiro nível gerencia 4 MB de espaço e cada entrada do segundo mapeia 4KB, totalizando 4GB. A Figura abaixo apresenta um exemplo de 
+funcionamento da MMU para o caso de tabelas de páginas multinível. 
+1º) MOVE REG 4206600 Æ MOVE REG? 
+2º) 4206600 Æ 0000000001 | 0000000011 | 000000001000 
+3º) 0000000001 = 1 (TP1) – Endereços de 4Mb a 8 Mb de TP1 
+4º) 0000000011 = 3 (TP2) – Endereço da Base = 12.288 
+5º) 000000001000 = 8 (Deslocamento) 
+6º) Endereço Real=Base + Deslocamento = 12.288 + 8 =12.296 Æ MOVE REG 12296 
+
+7.4.2 POLÍTICAS DE BUSCA DE PÁGINAS
+Determina quando uma página deve ser carregada para a memória. Basicamente, existem duas estratégias para este propósito: paginação sob demanda e pré-paginação ou paginação 
+antecipada. Na paginação sob demanda, as páginas dos processos são transferidas da memória secundária para a principal apenas quando são referenciadas. Este mecanismo é 
+conveniente, na medida em que leva para a memória principal apenas as páginas realmente necessárias à execução do programa. Desse modo, é possível que partes não executadas do 
+programa, como rotinas de tratamento de erros, nunca sejam carregadas para a memória. Na pré-paginação, o sistema carrega para a memória principal, além da página referenciada, 
+outras páginas que podem ou não ser necessárias ao processo ao longo do processamento. Se imaginarmos que o programa está armazenado seqüencialmente no disco, existe uma grande 
+economia de tempo em levar um conjunto de páginas da memória secundária, ao contrário de carregar uma de cada vez. Por outro lado, caso o processo não precise das páginas 
+carregadas antecipadamente, o sistema terá perdido tempo e ocupado memória principal desnecessariamente. 
+
+7.4.3 POLÍTICAS DE ALOCAÇÃO DE PÁGINAS Determina quantas molduras 
+(frames) cada processo pode manter na memória principal. Existem, basicamente, duas alternativas: alocação fixa e alocação variável. Na política de alocação fixa, cada processo 
+tem um número máximo de molduras que pode ser utilizado durante a execução do programa. Caso o número de páginas reais seja insuficiente, uma página do processo deve ser 
+descartada para que uma nova seja carregada. O limite de páginas deve ser definido no momento da criação do processo, com base no tipo da aplicação que será executada. Essa 
+informação faz parte do contexto de software do processo. Apesar de sua simplicidade, a política de alocação fixa de página apresenta dois problemas. Se o número máximo de 
+páginas alocadas for muito pequeno, o processo tenderá a ter um elevado número de falta de página, o que pode impactar no desempenho de todo o sistema. Por outro lado, caso o 
+número de páginas seja muito grande, cada processo irá ocupar na memória principal um espaço maior do que o necessário, reduzindo o número de processos residentes e o grau de 
+multiprogramação. Na política de alocação variável, o número máximo de páginas pode variar durante sua execução em função de sua taxa de paginação e da ocupação da memória 
+principal. Este mecanismo, apesar de ser mais flexível, exige que o Sistema Operacional monitore constantemente o comportamento dos processos, gerando maior overhead. 
+
+7.4.4 POLÍTICAS DE SUBSTITUIÇÃO DE PÁGINAS 
+Em algumas situações, quando um processo atinge o seu limite de alocação de molduras e necessita alocar novas páginas na memória principal, o Sistema Operacional deve 
+selecionar, dentre as diversas páginas alocadas, qual deverá ser liberada. Este mecanismo é chamado de política de substituição de páginas. Uma página real, quando liberada por 
+um processo, está livre para ser utilizada por qualquer outro. A partir dessa situação, qualquer estratégia de substituição de páginas deve considerar se uma página foi ou não 
+modificada antes de liberá-la. Se a página tiver sido modificada, o sistema deverá gravá-la na memória secundária antes do descarte, preservando seu conteúdo para uso em futuras 
+referências. Este mecanismo é conhecido como page out. O Sistema Operacional consegue identificar as páginas modificadas através de um bit que existe em cada entrada da tabela 
+de páginas, chamado bit de modificação. Sempre que uma página sofre uma alteração, o valor do bit de modificação é alterado, indicando que a página foi modificada. A política 
+de substituição de páginas pode ser classificada conforme seu escopo, ou seja, dentre os processos residentes na memória principal quais são candidatos a ter páginas realocadas. 
+Em função deste escopo, pode ser definida como local ou global.

@@ -7,10 +7,10 @@ using namespace std;
 
 void run() {
     int numberCharactersAnalyzedSeen = 0;
-    string analyzedStandard = "Atenas";
+    string analyzedStandard = "memória";
     vector <pair <int, int>> positions;
 
-    FlowInput stream("fileText.txt");
+    FlowInput stream("fileTextTest.txt");
     
     while(stream.isBlocksToBeRead()) {
         pair <int, string> analyzedText = stream.ReadingBlock();
