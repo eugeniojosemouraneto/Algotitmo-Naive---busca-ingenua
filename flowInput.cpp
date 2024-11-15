@@ -29,6 +29,10 @@ class FlowInput {
             file.open(this -> fileName);
         }
 
+        ˜FlowInput() {
+            this ->  closeFile();
+        }
+
         void setMaxCharacteresPerRead(int newMaxCharacteres = DEFAULT_NUMBER_MAX_CHARACTERS_PER_READ) {
             this -> numberMaxCharacteresPerRead = newMaxCharacteres;
         }
@@ -37,7 +41,7 @@ class FlowInput {
             this -> file.close();
         }
 
-        bool isBlocksToBeRead() {return (this -> file.peek() != EOF);}
+        bool isBlocksToBeRead() {return (this -> file.peek() != EOF);} // checks if there are blocks to be read by analyzing whether there is an end of file on the next read
 
         pair<int, string> ReadingBlock(int blockToBeRead = -1) {
             if(blockToBeRead < 1) blockToBeRead = this -> blockNumberAnalyzed;
